@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+  <Package Name="SWRC Case Context Builder"
+            Manufacturer="Siptu Workers Rights Centre"
+            Version="1.13.0.0"
+            UpgradeCode="6E1D2F3A-9C4B-4E2E-9E52-2C8B6E2D9A11"
+            Language="1033"
+            InstallerVersion="500"
+            Scope="perMachine">
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="SWRC Case Context Builder">
+        <Component Id="MainExecutable" Guid="A2E1A0B4-6C7F-4C1A-9F3D-1B2C3D4E5F60" Bitness="always64">
+          <File Id="SWRCCaseContextBuilderExe"
+                Source="$(PublishDir)SWRCCaseContextBuilder.exe"
+                KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="SWRC Case Context Builder">
+        <Component Id="ApplicationShortcut" Guid="B3F2B1C5-7D8E-4D2B-8A4E-2C3D4E5F6A71" Bitness="always64">
+          <Shortcut Id="ApplicationStartMenuShortcut"
+                    Name="SWRC Case Context Builder"
+                    Description="Build a searchable, reviewable context for a case"
+                    Target="[INSTALLFOLDER]SWRCCaseContextBuilder.exe"
+                    WorkingDirectory="INSTALLFOLDER" />
+          <RemoveFolder Id="RemoveApplicationProgramsFolder" On="uninstall" />
+          <RegistryValue Root="HKCU"
+                          Key="Software\SWRC\SWRCCaseContextBuilder"
+                          Name="installed"
+                          Type="integer"
+                          Value="1"
+                          KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="C4A3C2D6-8E9F-4E3C-9B5F-3D4E5F6A7B82" Bitness="always64">
+        <Shortcut Id="ApplicationDesktopShortcut"
+                  Name="SWRC Case Context Builder"
+                  Description="Build a searchable, reviewable context for a case"
+                  Target="[INSTALLFOLDER]SWRCCaseContextBuilder.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RegistryValue Root="HKCU"
+                        Key="Software\SWRC\SWRCCaseContextBuilder"
+                        Name="desktopShortcut"
+                        Type="integer"
+                        Value="1"
+                        KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="SWRC Case Context Builder" Level="1">
+      <ComponentRef Id="MainExecutable" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="DesktopShortcut" />
+    </Feature>
+
+    <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" Overridable="yes" />
+
+  </Package>
+</Wix>

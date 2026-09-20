@@ -1,0 +1,85 @@
+﻿<Window x:Class="SWRCCaseContextBuilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SWRC Case File Helper" Height="560" Width="760" MinHeight="560" MinWidth="760">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <Button x:Name="BtnHelp" DockPanel.Dock="Right" Content="Help" Width="60"
+                    Click="BtnHelp_Click" ToolTip="Show information about what this application does"/>
+            <TextBlock Text="SWRC Case File Helper — local email file and OCR processor"
+                       FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+        </DockPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,8,0,8" VerticalAlignment="Center">
+            <Label Width="90">Source folder:</Label>
+            <TextBox x:Name="TxtSource" Width="420" IsReadOnly="True"
+                     ToolTip="The locally synchronised OneDrive (or other) folder containing the case files to process. All files within this folder (including subfolders) will be copied and processed."/>
+            <Button Content="Browse..." Margin="8,0,0,0" Click="BtnBrowseSource_Click"
+                    ToolTip="Browse for the source folder containing the case files"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                <Label Width="90">Output folder:</Label>
+                <TextBox x:Name="TxtOutput" Width="420" IsReadOnly="True"
+                         ToolTip="The folder where processed output (extracted files, reports and manifests) will be created. Must be empty. Disabled when 'Create output folder in source' is checked."/>
+                <Button x:Name="BtnBrowseOutput" Content="Browse..." Margin="8,0,0,0" Click="BtnBrowseOutput_Click"
+                        ToolTip="Browse for an empty output folder"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                <Label Width="90"/>
+                <CheckBox x:Name="ChkCreateOutputInSource" IsChecked="True" Content="Create output folder in source (named &quot;&lt;SourceFolderName or CaseRef&gt;_Output&quot;)" Checked="ChkCreateOutputInSource_CheckedChanged" Unchecked="ChkCreateOutputInSource_CheckedChanged"
+                          ToolTip="When checked, automatically creates a new '_Output' folder inside the source folder instead of requiring you to select one manually."/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                <Label Width="90">Case ref:</Label>
+                <TextBox x:Name="TxtCaseRef" Width="420"
+                         ToolTip="Optional case reference used to name the output folder (if auto-created) and the generated report files. Defaults to the source folder name if left blank."/>
+                <CheckBox x:Name="ChkOpenOnFinish" IsChecked="True" Margin="8,0,0,0" Content="Open output folder on completion"
+                          ToolTip="When checked, automatically opens the output folder in File Explorer once processing has completed."/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                <Label Width="90"/>
+                <CheckBox x:Name="ChkRemoveDuplicates" Margin="0,0,0,0" Checked="ChkRemoveDuplicates_Checked" Content="Remove duplicate files from output (keep first copy)"
+                          ToolTip="When checked, files with identical content (byte-for-byte, based on SHA-256 hash) are removed from the extracted output, keeping only the first copy encountered. An additional 'Distinct' report is also generated for each selected report type."/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0,8,0,0">
+                <TextBlock Text="Reports to generate:" FontWeight="Bold" Margin="0,0,0,4"/>
+                <CheckBox x:Name="ChkOutputAllText" Content="All text (as processed)" IsChecked="True" Margin="0,2"
+                          ToolTip="Generates a Word report containing all extracted text for every item, in the order they were processed (as found on disk)."/>
+                <CheckBox x:Name="ChkOutputAllTextChronological" Content="All text (chronological)" IsChecked="True" Margin="0,2"
+                          ToolTip="Generates a Word report containing all extracted text for every item, ordered chronologically by email/document date (oldest first)."/>
+                <CheckBox x:Name="ChkOutputAllTextChronologicalReversed" Content="All text (chronological, reversed)" IsChecked="True" Margin="0,2"
+                          ToolTip="Generates a Word report containing all extracted text for every item, ordered chronologically by email/document date (newest first)."/>
+                <CheckBox x:Name="ChkOutputEmailsOnlyChronological" Content="Emails only (chronological)" IsChecked="True" Margin="0,2"
+                          ToolTip="Generates a Word report containing only email items (not other document types), ordered chronologically by date (oldest first)."/>
+                <CheckBox x:Name="ChkOutputEmailsOnlyChronologicalReversed" Content="Emails only (chronological, reversed)" IsChecked="True" Margin="0,2"
+                          ToolTip="Generates a Word report containing only email items (not other document types), ordered chronologically by date (newest first)."/>
+            </StackPanel>
+
+            <TextBlock x:Name="TxtInfo" TextWrapping="Wrap" Margin="0,8,0,8" Foreground="Gray">
+                Tip: Only works on local folders - To make a OneDrive folder available locally (Right-click folder -> __Always keep on this device__).
+            </TextBlock>
+
+            <ProgressBar x:Name="ProgressBar" Height="18" IsIndeterminate="False" Minimum="0" Maximum="100" />
+            <TextBlock x:Name="TxtStatus" Margin="0,6,0,0" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+            <Button Content="Start" Width="100" Click="BtnStart_Click" Margin="0,0,8,0"
+                    ToolTip="Begin processing the source folder and generating the selected reports"/>
+            <Button Content="Exit" Width="100" Click="BtnExit_Click" ToolTip="Close the application"/>
+        </StackPanel>
+    </Grid>
+</Window>
