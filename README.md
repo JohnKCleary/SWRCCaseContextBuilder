@@ -94,14 +94,10 @@ including nested email attachments) are handled:
   this is not configurable.
 
 ## To Test the app:
-optionally download the zipped folder of Test_Input 
-which contains examples of
-**nested emails (3 levels)
-emails with duplicate names
-email attachments -pdf image, jpg - requiring OCR**
-
-Compare output for the different output reports, emails only, chronological, remove duplicates etc
-Practice on your own data
+- optionally download the zipped folder of Test_Input, which contains examples of
+- **nested emails (3 levels), multiple attached emails with duplicate names, attached images (jpg) requiring OCR**
+- Compare output for the different output reports, emails only, chronological, remove duplicates etc
+- Practice on your own data
 
 ## Requirements
 
