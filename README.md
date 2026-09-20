@@ -1,7 +1,7 @@
 # SWRC Case Context Builder
 
-A Windows desktop (WPF) tool that processes a folder of case files — emails, PDFs, Word/Excel
-documents, and images — and builds a searchable, reviewable "context" for a case.
+A Windows desktop (WPF) tool that processes a folder of case files â€” emails, PDFs, Word/Excel
+documents, and images â€” and builds a searchable, reviewable "context" for a case.
 
 ## What it does
 
@@ -15,7 +15,7 @@ documents, and images — and builds a searchable, reviewable "context" for a case
 - **Detects duplicate files** (by SHA-256 content hash) and, if requested, removes duplicate
   copies from the output while noting the original in the report.
 - **Generates a CSV and Excel manifest** of every item processed, plus one or more Word
-  "context" reports combining all extracted text and metadata — optionally ordered
+  "context" reports combining all extracted text and metadata â€” optionally ordered
   chronologically and/or restricted to emails only.
 
 ## Typical usage
@@ -34,11 +34,20 @@ The output folder contains:
 02_Context/             - CSV/Excel manifest + generated Word context report(s)
 03_Review_Exceptions/   - reserved for items requiring manual review
 ```
+## To Test the app:
+optionally download the zipped folder of Test_Input 
+which contains examples of
+**nested emails (3 levels)
+emails with duplicate names
+email attachments -pdf image, jpg - requiring OCR**
+
+Compare output for the different output reports, emails only, chronological, remove duplicates etc
+Practice on your own data
 
 ## Requirements
 
 - Windows 10/11 (x64)
-- No prerequisites required for the installed app — it is self-contained and bundles the
+- No prerequisites required for the installed app â€” it is self-contained and bundles the
   .NET runtime, Tesseract, Leptonica, and SkiaSharp. The English OCR language data
   (`eng.traineddata`) is downloaded automatically on first run if not already available.
 
@@ -46,8 +55,8 @@ The output folder contains:
 
 The solution consists of:
 
-- **`SWRCCaseContextBuilder`** — the WPF application (.NET 8, `net8.0-windows`).
-- **`SWRCCaseContextBuilder.Installer`** — a WiX v5 project that packages a self-contained,
+- **`SWRCCaseContextBuilder`** â€” the WPF application (.NET 8, `net8.0-windows`).
+- **`SWRCCaseContextBuilder.Installer`** â€” a WiX v5 project that packages a self-contained,
   single-file publish of the app into an MSI installer.
 
 To build and publish the app:
@@ -66,15 +75,16 @@ dotnet build SWRCCaseContextBuilder.Installer\SWRCCaseContextBuilder.Installer.w
 
 The resulting MSI is written to `SWRCCaseContextBuilder.Installer\bin\x64\Release\`.
 
+
 ## Key technologies
 
 - WPF (.NET 8)
-- [MimeKit](https://github.com/jstedfab/MimeKit) / [MsgReader](https://github.com/Sicos1977/MSGReader) — email parsing
-- [PdfPig](https://github.com/UglyToad/PdfPig) / [PDFtoImage](https://github.com/sungaila/PDFtoImage) — PDF text extraction and rasterization
-- [Tesseract](https://github.com/charlesw/tesseract) — OCR
-- [DocumentFormat.OpenXml](https://github.com/dotnet/Open-XML-SDK) — Word report generation
-- [ClosedXML](https://github.com/ClosedXML/ClosedXML) — Excel manifest generation
-- [WiX Toolset v5](https://wixtoolset.org/) — MSI installer
+- [MimeKit](https://github.com/jstedfab/MimeKit) / [MsgReader](https://github.com/Sicos1977/MSGReader) â€” email parsing
+- [PdfPig](https://github.com/UglyToad/PdfPig) / [PDFtoImage](https://github.com/sungaila/PDFtoImage) â€” PDF text extraction and rasterization
+- [Tesseract](https://github.com/charlesw/tesseract) â€” OCR
+- [DocumentFormat.OpenXml](https://github.com/dotnet/Open-XML-SDK) â€” Word report generation
+- [ClosedXML](https://github.com/ClosedXML/ClosedXML) â€” Excel manifest generation
+- [WiX Toolset v5](https://wixtoolset.org/) â€” MSI installer
 
 ## License
 
